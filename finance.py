@@ -6,9 +6,6 @@ import yfinance as yf
 import pandas as pd
 from datetime import date, timedelta
 from pandas_datareader import data as pdr
-
-
-
 import sys
 import random
 import time
@@ -16,7 +13,7 @@ import json
 
 
 
-def Ec2pi_estimator(eR,q):
+def ec2_risk_calculation(h,d,t):
     start = time.time()
     values=[]
     # override yfinance with pandas – seems to be a common step
@@ -73,11 +70,12 @@ def Ec2pi_estimator(eR,q):
     # to be generated based on the mean and standard deviation of the recent history
     # print("Length: ",len(data))
 
-    minhistory = 200
-    shots = 100000
+    minhistory = h
+    
+    shots = d
     j=0
     for i in range(minhistory, len(data)):
-        if data.Buy[i]==1: # if we’re interested in Buy signals
+        if data.Buy[i]==t: # if we’re interested in Buy signals
 
             print("the date - ",data["Date"][i])
             mean=data.Close[i-minhistory:i].pct_change(1).mean()
@@ -91,23 +89,6 @@ def Ec2pi_estimator(eR,q):
             values.append((data["Date"][i],var95, var99))
             j=j+1
             print(j,i,var95, var99) # so you can see what is being produced
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     elapsed_time = time.time() - start
@@ -126,4 +107,4 @@ print(sys.argv[1],sys.argv[2])
 
 
 
-sys.stdout.write(Ec2pi_estimator(int(sys.argv[1]),int(sys.argv[2])))
+sys.stdout.write(ec2_risk_calculation(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3])))
