@@ -87,8 +87,8 @@ def ec2_risk_calculation(h,d,t):
             var95 = simulated[int(len(simulated)*0.95)]
             var99 = simulated[int(len(simulated)*0.99)]
             values.append((data["Date"][i],var95, var99))
-            j=j+1
-            print(j,i,var95, var99) # so you can see what is being produced
+#             j=j+1
+#             print(j,i,var95, var99) # so you can see what is being produced
 
 
     elapsed_time = time.time() - start
