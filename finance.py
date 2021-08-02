@@ -77,7 +77,7 @@ def ec2_risk_calculation(h,d,t):
     for i in range(minhistory, len(data)):
         if data.Buy[i]==t: # if we’re interested in Buy signals
 
-#             print("the date - ",data["Date"][i])
+            # print("the date - ",data["Date"][i])
             mean=data.Close[i-minhistory:i].pct_change(1).mean()
             std=data.Close[i-minhistory:i].pct_change(1).std()
             # generate much larger random number series with same broad characteristics
@@ -86,13 +86,14 @@ def ec2_risk_calculation(h,d,t):
             simulated.sort(reverse=True)
             var95 = simulated[int(len(simulated)*0.95)]
             var99 = simulated[int(len(simulated)*0.99)]
-            values.append([data["Date"][i],var95, var99])
-#             j=j+1
-#             print(j,i,var95, var99) # so you can see what is being produced
+            values.append([str(data["Date"][i]),var95, var99])
+            # j=j+1
+            # print(j,i,var95, var99) # so you can see what is being produced
 
 
-    elapsed_time = time.time() - start
-    return str({
+    elapsed_time = str(time.time() - start)
+    
+    return json.dumps({
         "values":values,
         "elapsed_time": elapsed_time,
     })
@@ -103,7 +104,7 @@ print ('# Args:', len(sys.argv))
 print ('Argument List:', str(sys.argv))
 
 print(sys.argv)
-print(sys.argv[1],sys.argv[2])
+print(sys.argv[1],sys.argv[2],sys.argv[3])
 
 
 
