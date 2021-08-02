@@ -92,7 +92,7 @@ def ec2_risk_calculation(h,d,t):
 
 
     elapsed_time = time.time() - start
-    return ({
+    return str({
         "values":values,
         "elapsed_time": elapsed_time,
     })
