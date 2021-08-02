@@ -31,7 +31,7 @@ def ec2_risk_calculation(h,d,t):
     # fill with zero
     data['Buy']=0
     data['Sell']=0
-    print("*"*50)
+    # print("*"*50)
     # print(data)
     # Find the 4 different types of signals – uncomment print statements
     # if you want to look at the data these pick out in some another way
@@ -42,22 +42,22 @@ def ec2_risk_calculation(h,d,t):
 
         if data.High[i] >= data.Close[i] and data.High[i]-bodyprojection <= data.Close[i] and data.Close[i] > data.Open[i] and data.Open[i] > data.Low[i] and data.Open[i]-data.Low[i] > realbody:
             data.at[data.index[i], 'Buy'] = 1
-            print("H", data.Open[i], data.High[i], data.Low[i], data.Close[i])
+            # print("H", data.Open[i], data.High[i], data.Low[i], data.Close[i])
 
         # Inverted Hammer
         if data.High[i] > data.Close[i] and data.High[i]-data.Close[i] > realbody and data.Close[i] > data.Open[i] and data.Open[i] >= data.Low[i] and data.Open[i] <= data.Low[i]+bodyprojection:
             data.at[data.index[i], 'Buy'] = 1
-            print("I", data.Open[i], data.High[i], data.Low[i], data.Close[i])
+            # print("I", data.Open[i], data.High[i], data.Low[i], data.Close[i])
 
         # Hanging Man
         if data.High[i] >= data.Open[i] and data.High[i]-bodyprojection <= data.Open[i] and data.Open[i] > data.Close[i] and data.Close[i] > data.Low[i] and data.Close[i]-data.Low[i] > realbody:
             data.at[data.index[i], 'Sell'] = 1
-            print("M", data.Open[i], data.High[i], data.Low[i], data.Close[i])
+            # print("M", data.Open[i], data.High[i], data.Low[i], data.Close[i])
 
         # Shooting Star
         if data.High[i] > data.Open[i] and data.High[i]-data.Open[i] > realbody and data.Open[i] > data.Close[i] and data.Close[i] >= data.Low[i] and data.Close[i] <= data.Low[i]+bodyprojection:
             data.at[data.index[i], 'Sell'] = 1
-            print("S", data.Open[i], data.High[i], data.Low[i], data.Close[i])
+            # print("S", data.Open[i], data.High[i], data.Low[i], data.Close[i])
 
 
 
