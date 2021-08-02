@@ -77,7 +77,7 @@ def ec2_risk_calculation(h,d,t):
     for i in range(minhistory, len(data)):
         if data.Buy[i]==t: # if we’re interested in Buy signals
 
-            print("the date - ",data["Date"][i])
+#             print("the date - ",data["Date"][i])
             mean=data.Close[i-minhistory:i].pct_change(1).mean()
             std=data.Close[i-minhistory:i].pct_change(1).std()
             # generate much larger random number series with same broad characteristics
