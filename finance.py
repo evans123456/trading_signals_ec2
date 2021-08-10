@@ -21,7 +21,7 @@ def fetch_data():
     today = date.today()
     decadeAgo = today - timedelta(days=3652)
 
-    data = pdr.get_data_yahoo('AMZN', start=decadeAgo, end=today).reset_index()
+    data = pdr.get_data_yahoo('CSCO', start=decadeAgo, end=today).reset_index()
     # Other symbols: CSCO – Cisco, NFLX – Netflix, INTC – Intel, TSLA - Tesla
     # print(data)
     data["Date"] = data["Date"].apply(lambda x: pd.Timestamp(x).date().strftime('%m/%d/%Y'))
