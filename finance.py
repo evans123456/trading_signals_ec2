@@ -12,10 +12,8 @@ import time
 import json
 
 
-
-def ec2_risk_calculation(h,d,t):
-    start = time.time()
-    values=[]
+def fetch_data():
+    
     # override yfinance with pandas – seems to be a common step
     yf.pdr_override()
 
@@ -26,6 +24,8 @@ def ec2_risk_calculation(h,d,t):
     data = pdr.get_data_yahoo('AMZN', start=decadeAgo, end=today).reset_index()
     # Other symbols: CSCO – Cisco, NFLX – Netflix, INTC – Intel, TSLA - Tesla
     # print(data)
+    data["Date"] = data["Date"].apply(lambda x: pd.Timestamp(x).date().strftime('%m/%d/%Y'))
+
 
     # Add two columns to this to allow for Buy and Sell signals
     # fill with zero
@@ -58,18 +58,17 @@ def ec2_risk_calculation(h,d,t):
         if data.High[i] > data.Open[i] and data.High[i]-data.Open[i] > realbody and data.Open[i] > data.Close[i] and data.Close[i] >= data.Low[i] and data.Close[i] <= data.Low[i]+bodyprojection:
             data.at[data.index[i], 'Sell'] = 1
             # print("S", data.Open[i], data.High[i], data.Low[i], data.Close[i])
+    
+    # print("Sell: ",data.Sell.value_counts())
+    # print("Buy: ",data.Buy.value_counts())
+        
+    return data
 
 
-
-
-
-    # print(data)
-
-    # Data now contains signals, so we can pick signals with a minimum amount
-    # of historic data, and use shots for the amount of simulated values
-    # to be generated based on the mean and standard deviation of the recent history
-    # print("Length: ",len(data))
-
+def ec2_risk_calculation(h,d,t):
+    start = time.time()
+    values=[]
+    data = fetch_data()
     minhistory = h
     
     shots = d
